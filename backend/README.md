@@ -5,5 +5,5 @@ overview:
 * Server logs connections and disconnections
 
 run with:
-dev => `npm run build && npm run start`
-normal => `npm run dev`
+normal => `npm run build && npm run start`
+dev => `npm run dev`

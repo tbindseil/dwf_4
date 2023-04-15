@@ -9,7 +9,7 @@ const port = process.env.PORT || 8080;
 const io: Server = new socket_factory.Server(server);
 
 app.get('/', (_req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+  res.sendFile('index.html', { root: '.' });
 });
 
 io.on('connection', (socket: Socket) => {
