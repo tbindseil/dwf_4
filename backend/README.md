@@ -1,7 +1,6 @@
 overview:
 
-* Serves basic webpage on localhost:8080/.
-* This webpage connects to a socket upon loading and disconnects upon unloading.
+* Listens for socket connection requests on localhost:8080/.
 * Server logs connections and disconnections
 
 run with:

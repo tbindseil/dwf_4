@@ -1,15 +1,15 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import http from 'http';
-import socket_factory, {Server, Socket} from 'socket.io';
+import {Server, Socket} from 'socket.io';
 
 const app: Express = express();
 const server = http.createServer(app);
 const port = process.env.PORT || 8080;
 
-const io: Server = new socket_factory.Server(server);
-
-app.get('/', (_req: Request, res: Response) => {
-  res.sendFile('index.html', { root: '.' });
+const io: Server = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
 });
 
 io.on('connection', (socket: Socket) => {
