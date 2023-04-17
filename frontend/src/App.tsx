@@ -1,9 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 
 import { SocketContext, socket } from './context/socket';
 
 function App() {
+
+    const [broadcastText, setBroadcastText] = useState('message to broadcast');
+    const [latestReceivedBroadcast, setLatestReceivedBroadcast] = useState('');
+
+    const broadcastButttonOnClickHandler = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        console.log(`broadcasting ${broadcastText}`);
+        socket.emit('clientToServer', broadcastText);
+    };
+
+    socket.on('serverToClient', (msg: string) => {
+        setLatestReceivedBroadcast(msg);
+    });
+
     return (
         <SocketContext.Provider value={socket}>
             <div className="App">
@@ -22,6 +35,24 @@ function App() {
                         }}>
                             Click to disconnect
                     </button>
+                    <div>
+                        <input
+                            name='broadcastInput'
+                            value={broadcastText}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setBroadcastText(event.target.value);
+                            }}
+                            type='text'/>
+                        <button
+                            onClick={broadcastButttonOnClickHandler}>
+                                Click to broadcast
+                            </button>
+                    </div>
+                    <div>
+                        <p>
+                            {latestReceivedBroadcast}
+                        </p>
+                    </div>
                 </header>
             </div>
         </SocketContext.Provider>
